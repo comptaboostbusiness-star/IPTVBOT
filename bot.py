@@ -207,7 +207,7 @@ def generate_invoice_pdf(data: dict) -> BytesIO:
             def wrap(self, aw, ah):
                 return self.width, self.height
 
-            def drawOn(self, canvas_obj, x, y):
+            def drawOn(self, canvas_obj, x, y, _sW=0):
                 canvas_obj.saveState()
                 p = canvas_obj.beginPath()
                 r = 8 * mm
@@ -295,7 +295,7 @@ def generate_invoice_pdf(data: dict) -> BytesIO:
                 self._h = h + 2 * padding
                 return aw, self._h
 
-            def drawOn(self, canvas_obj, x, y):
+            def drawOn(self, canvas_obj, x, y, _sW=0):
                 canvas_obj.saveState()
                 canvas_obj.setFillColor(self.bg)
                 canvas_obj.roundRect(x, y, self._w, self._h,
@@ -355,7 +355,7 @@ def generate_invoice_pdf(data: dict) -> BytesIO:
             self._w = aw
             return aw, self._h
 
-        def drawOn(self, canvas_obj, x, y):
+        def drawOn(self, canvas_obj, x, y, _sW=0):
             canvas_obj.saveState()
             steps = 50
             c1, c2 = COLOR_PURPLE2, COLOR_PINK
