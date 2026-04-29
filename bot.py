@@ -6,6 +6,17 @@ from urllib.parse import urlparse, parse_qs
 from io import BytesIO
 from flask import Flask
 from threading import Thread
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Table,
+    TableStyle,
+    HRFlowable,
+    Flowable,
+)
+
+
 
 web_app = Flask(__name__)
 
@@ -186,7 +197,7 @@ def generate_invoice_pdf(data: dict) -> BytesIO:
         pass
 
     def header_flowable():
-        class _Header(object):
+        class _Header(Flowable):
             def __init__(self):
                 self.width = usable_width
                 self.height = HEADER_H
@@ -270,7 +281,7 @@ def generate_invoice_pdf(data: dict) -> BytesIO:
     story.append(Spacer(1, 5 * mm))
 
     def card(inner_table, bg=COLOR_LIGHT, radius=4 * mm, padding=4 * mm):
-        class _Card(object):
+        class _Card(Flowable):
             def __init__(self):
                 self._table = inner_table
                 self.bg = bg
@@ -335,7 +346,7 @@ def generate_invoice_pdf(data: dict) -> BytesIO:
         "1an":   "1 rok",
     }[data["pack_key"]]
 
-    class PackCard(object):
+    class PackCard(Flowable):
         def __init__(self):
             self._w = None
             self._h = 36 * mm
