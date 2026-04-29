@@ -6,7 +6,6 @@ from urllib.parse import urlparse, parse_qs
 from io import BytesIO
 from flask import Flask
 from threading import Thread
-import os
 
 web_app = Flask(__name__)
 
@@ -54,7 +53,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 (
     PACK_SELECTION,
